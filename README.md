@@ -16,8 +16,8 @@ This project is designed to simulate a real-world analytics task, where you must
 
 ## Dataset
 
-- **Source:** [https://github.com/rfordatascience/tidytuesday/tree/main/data/2020/2020-02-11]
-- **Description:** [The data comes from an open hotel booking demand dataset from Antonio, Almeida and Nunes, 2019.]
+- **Source:** https://github.com/rfordatascience/tidytuesday/tree/main/data/2020/2020-02-11
+- **Description:** The data comes from an open hotel booking demand dataset from Antonio, Almeida and Nunes, 2019.
 
 ## Data Dictionary
 
@@ -48,7 +48,7 @@ This project is designed to simulate a real-world analytics task, where you must
 ## Research Questions
 
 1. Is there a relation between having children and booking resort hotels
-2. How do characteristics (Children, Hotel Type, Length of Stay, ...) affect average daily rate?
+2. How do characteristics (Children, Hotel Type, Length of Stay, etc) affect average daily rate?
 3. Additional questions???????
 
 
@@ -57,8 +57,9 @@ This project is designed to simulate a real-world analytics task, where you must
 
 ## Results
 
-a
+ - blah blah
 
 ## Contact
 
-Made by Alex Copeland
+Made by Alex Copeland,
+alexcopeland2020@gmail.com
