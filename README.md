@@ -54,14 +54,10 @@ This project is designed to simulate a real-world analytics task, where you must
 
 ## Methods
 - explain process here
-- Data cleaning and preprocessing steps
-- Statistical analyses performed
-- Visualization techniques used
-
 
 ## Results
 
-[Summarize key findings or link to your report/notebook.]
+a
 
 ## Contact
 
