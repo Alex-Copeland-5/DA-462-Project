@@ -1,0 +1,161 @@
+---
+title: "DA_Project"
+author: "Alex Copeland"
+format: 
+  embed-resources: TRUE
+editor: visual
+---
+
+```{R}
+#| echo: false
+
+# Reading in dataset
+
+hotels <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-02-11/hotels.csv', show_col_types = FALSE)
+```
+
+```{R}
+# Defining Variables
+
+# Subset dataset by hotel type
+CityHotel <- hotels[hotels$hotel == "City Hotel" , ]
+ResortHotel <- hotels[hotels$hotel == "Resort Hotel" , ]
+
+# Define vector of predictor names for regression
+characteristics <- c("adults", "children", "babies", "lead_time", "stays_in_weekend_nights", "stays_in_week_nights")
+
+# for regression
+unique_characteristics <- list()
+
+```
+
+```{R}
+# Question One
+# Do city hotels or resort hotels have more children per booking?
+
+t.test(CityHotel$children, ResortHotel$children)
+
+# There is a statistical significant difference between children per type of hotel. On average city hotels have .03 - .04 less children per booking.
+
+```
+
+
+
+```{R}
+# Question Two
+# Regression model predicting the average daily rate
+lm_adr <- lm(adr ~ adults + children + babies + lead_time + stays_in_weekend_nights + stays_in_week_nights, data = hotels)
+
+# Regression model by City Hotel
+lm_ch_adr <- lm(adr ~ adults + children + babies + lead_time + stays_in_weekend_nights + stays_in_week_nights, data = CityHotel)
+
+# Regression model by Resort Hotel
+lm_rh_adr <- lm(adr ~ adults + children + babies + lead_time + stays_in_weekend_nights + stays_in_week_nights, data = ResortHotel)
+
+# OUTPUT NOTES
+# summary(lm_adr)
+# Coefficients:
+# adults 19.8
+# children  39.6
+# babies 7.7
+
+# Each adult adds an additional $19.8 to the average daily rate
+# each child adds 39.6 (I assume this is because the adults mainly need one bed, and the children would require more beds meaning a more expensive room?)
+# stays_in_week_nights adds $1.1 to the average daily rate
+# each weekend night decreases adr by 0.5, but is not significant indicating no relationship between the adr and weekends
+
+# Do the same for CityHotel and ResortHotel for model by hotel types
+
+
+
+
+
+
+
+
+
+
+
+# combn function (https://www.geeksforgeeks.org/r-language/calculate-combinations-and-permutations-in-r/)
+# loop list explanation (https://stackoverflow.com/questions/26508519/how-to-add-elements-to-a-list-in-r-loop)
+
+# Unique combinations of characteristics
+
+list_add <- list()
+unique_characteristics <- list()
+for (i in 1:6){
+  
+  list_add <- combn(characteristics, i, simplify = FALSE) #FALSE makes this a list
+  
+  unique_characteristics[[i]] <- list_add
+}
+
+
+
+
+
+
+
+lm_1predictor <- function(list, dv = "adr") {
+  
+  results <- list()
+  
+  for (i in 1:length(list[[1]])){
+  
+    lm_mod1 <- lm(dv ~ list[[i]])
+    results[[i]] <- lm_mod1
+    
+  }
+}
+
+lm_1predictor(unique_characteristics)
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Introduction
+
+This project blah blah
+
+#### Dataset
+
+The dataset used for this project is the Hotels dataset from the tidytuesday GitHub repository.
+
+# maybe more ?s
+food for week vs weekend (ttest)
+
+food per months (anova?)
+
+Do repeated guest stay longer? (ttest)
+
+Do stays_in_week_nights collectively make up more than stays_in_weekend_nights?
+
+
+
+
+
+
