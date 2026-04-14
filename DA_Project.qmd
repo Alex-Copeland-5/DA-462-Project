@@ -206,13 +206,6 @@ Coefficient Estimates and 95\% Confidence Intervals
 regression_plot
 ```
 
-## Question Three
-
-- Do repeated guest stay longer than first time guest?
-
-
-
-
 
 
 ```{R}
@@ -230,33 +223,55 @@ repeated_guest <- hotels[hotels$is_repeated_guest == 1, ]
 
 # Test on days stayed between groups
 t_test_by_guest_question_three <- t.test(first_time$total_days_stayed, repeated_guest$total_days_stayed)
+sd_first_time <- sd(first_time$total_days_stayed)
+sd_repeated_guest <- (repeated_guest$total_days_stayed)
 
 
 # On average a first time guest stays 1.48 to 1.62 days longer. statistically significant.
 ```
 
+## Question Three
+
+- Do repeated guest stay longer than first time guest?
+
+An independent-samples t test was conducted to compare mean total nights stayed between first time guest and and returning guests. Participants in first time guest had a mean total nights stayed of $M = 3.48 (SD = 2.55)$, whereas returning guests had a mean of $M = 1.93 (SD = 2.14)$. This difference was statistically significant, $t(4174.2) = 43.69$, $p < .0001$. These results indicate that first time guest stay significantly longer on average than repeated guests. First time guests stay on average 1.55 days longer than repeated guests. 
+
+::: {style="text-align: center; padding: 20px 0;"}
+Average Days Stayed by Type of Guest
+:::
+
 ```{R}
 #| echo: false
-# Question Four
-# Which month affects the average daily rate the most?
-
-# Assign numeric scale to food options, no food --> full board; 0 --> 4
-
-hotels$meal_score <- ifelse(hotels$meal == "Undefined", 0, ifelse(hotels$meal == "SC", 0, ifelse(hotels$meal == "BB", 1, ifelse(hotels$meal == "HB", 2, ifelse(hotels$meal == "FB", 3, NA)))))
-
-# Test on meal score by month
-aov_mealscore_by_month <- aov(meal_score ~ arrival_date_month, data = hotels)
-summary(aov_mealscore_by_month)
-
-# Find the average of each months meal score
-avg_mealscore <- aggregate(meal_score ~ arrival_date_month, data = hotels, mean)
-avg_mealscore
-
-round(prop.table(table(hotels$arrival_date_month, hotels$meal), 1), digits = 2)
-
-
+ggplot(hotels, aes(x = factor(is_repeated_guest), y = total_days_stayed)) + geom_boxplot() + labs(title = "Total Days Stayed by Guest Type", x = "Guest", y = "Total Days Stayed") + scale_x_discrete(labels = c("0" = "First Time Guest", "1" = "Repeated Guest")) + theme_bw()
 ```
 
 
+```{R}
+#| echo: false
+# Question Four
+# Which month has the most meals served?
 
+# Clean "Undefined" to be "SC"
+
+hotels$meal[hotels$meal == "Undefined"] <- "SC"
+
+# Test on meal score by month
+table_food_by_month <- table(hotels$arrival_date_month, hotels$meal)
+chisq.test(table_food_by_month)
+```
+
+## Question Four
+
+- Which month has the most meals served?
+
+::: {style="text-align: center; padding: 20px 0;"}
+Contingency Table for Months and Meal Types
+:::
+
+```{R}
+#| echo: false
+contingency_table <- datasummary_crosstab(arrival_date_month ~ meal, data = hotels, levels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"), title = "Contingency Table")
+
+contingency_table
+```
 
