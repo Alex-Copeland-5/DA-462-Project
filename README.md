@@ -51,20 +51,38 @@ This project is designed to simulate a real-world analytics task, where you must
 
 ## Research Questions
 
-1. Is there a relation between having children and booking resort hotels (t test)
-2. How do characteristics (Children, Hotel Type, Length of Stay, etc) affect average daily rate? (regression, multiple regression)
-3. Do the amount of week days stayed collectively make up more than the amount of weekend days stayed?
-4. Do repeated guest stay longer than first time guest? (ttest)
-5. Are more meals ordered on week days or weekends (ttest)
-6. Are more meals ordered in specific months? (anova?)
+1.  Do city hotels or resort hotels have more children per booking?
+
+2.  Which combinations of characteristics affect adr the most?
+
+3.  Do repeated guest stay longer than first time guest?
+
+4.  Is average daily rate lower for longer stays?
 
 ## Methods
 
-- explain process here
+This project was done in R using the hotel booking dataset from TidyTuesday. I looked at patterns in hotel bookings and tested how different booking characteristics were related to average daily rate (ADR).
+
+- Loaded the hotel booking data from the source.
+- Split the data into groups like city hotels vs. resort hotels and first-time guests vs. repeated guests.
+- Created a `total_days_stayed` variable by adding weekday nights and weekend nights together.
+- Used t-tests to compare average values between groups.
+- Used linear regression and multiple regression to see which variables were related to ADR.
+- Compared different regression models and kept the ones with the best adjusted $R^2$.
+
+The main variables used in this project were hotel type, number of children, guest type, length of stay, lead time, and ADR.
 
 ## Results
 
-- blah blah
+The results showed a few clear patterns in the hotel booking data.
+
+- Resort hotels had a little more children per booking than city hotels.
+- Children, adults, babies, lead time, and weeknight stays were all useful for predicting ADR.
+- Out of the variables tested, children had the biggest positive effect on ADR.
+- First-time guests stayed longer on average than repeated guests.
+- Longer stays were linked to a slightly higher ADR, but the effect was pretty small.
+
+Overall, the results show that the type of booking and how long someone stays can help explain ADR, even though some of the differences were small in a practical sense.
 
 ## Contact
 
