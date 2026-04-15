@@ -11,7 +11,7 @@ remove all from environment because i forget all the tiME!!!!!!!!! <!--rm(list =
 
 ## Introduction
 
-In this study, we will be assessing multiple questions about how booking characteristics affect hotel average daily rate (adr) and length of stay. This is important because hotels use patterns similar to this study to define their average daily rate to maximize profits and help improve the guests experience staying at the hotel. We will be using statistical methods such as t-tests and linear regression models to determine any statistically significant relationship between adr and the other characteristics. The following research questions will be used in this study.
+In this study, we will be assessing multiple questions about how booking characteristics affect hotel average daily rate (adr) and hotel booking patterns. This is important because hotels use patterns similar to this study to define their average daily rate to maximize profits and help improve the guests experience staying at the hotel. We will be using statistical methods such as t-tests and linear regression models to determine any statistically significant relationship between adr and the other characteristics. The following research questions will be used in this study.
 
 1.  Do city hotels or resort hotels have more children per booking?
 
@@ -19,11 +19,11 @@ In this study, we will be assessing multiple questions about how booking charact
 
 3.  Do repeated guest stay longer than first time guest?
 
-4.  Which month affects the average daily rate the most?
+4.  Is average daily rate lower for longer stays?
 
 ## Dataset
 
-The dataset used for this project comes from the TidyTuesday GitHub repository and contains information about hotel bookings for city and resort hotels. Each observation in the dataset is a unique booking at either type of hotel with multiple variables describing the booking (.
+The dataset used for this project comes from the TidyTuesday GitHub repository and contains information about hotel bookings for city and resort hotels. Each observation in the dataset is a unique booking at either type of hotel with multiple variables describing the booking.
 
 Key variables used in this study
 
@@ -35,6 +35,22 @@ Key variables used in this study
 -   is_repeated_guest - Is guest repeated or not (0 = no, 1 = yes)
 
 The dataset is separated into subsets for city hotels and resort hotels. This allows for comparison by type of hotel. Similarly, the dataset was separated into two subsets for first time guest and repeated guest for comparison by type of guest. Additionally, a new variable total_days_stayed was created to answer question three.
+
+## Methods
+
+There was no cleaning necessary for the dataset, for my statistical analyses, there were only four observations that I decided to throw away and not use. For the data manipulation, I created subsets of the dataset that contained the observations of only bookings for city hotels and resort hotels for research question one. Also, I again subset the data into first time guest bookings and repeated guest bookings for the analysis of question three.
+
+```{R}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Install packages for users
+
+#install.packages('ggplot2')
+#install.packages('modelsummary')
+#install.packages('tinytable')
+```
 
 ```{R}
 #| echo: false
@@ -51,13 +67,13 @@ hotels <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tid
 
 # Defining libraries, functions, and variables
 
-##Libraries
+## Libraries
 library(ggplot2)
 library(modelsummary)
 library(tinytable)
 
-##Functions
-#Best Lm Function
+##F unctions
+#Best lm function
 find_best_lm <- function(data, DV, characteristics) {
   
   # Initialize empty lists
@@ -133,9 +149,11 @@ characteristics <- c("adults", "children", "babies", "lead_time", "stays_in_week
 t_test_question_one <- t.test(city_hotel$children, resort_hotel$children)
 ```
 
-## Question One
+## Analysis
 
-- Do city hotels or resort hotels have more children per booking?
+#### Research Question One
+
+-   Do city hotels or resort hotels have more children per booking?
 
 An independent-samples t test was conducted to compare number of children per booking between city hotels and resort hotels. Participants in city hotels had a mean number of children per booking of $M = 0.091 (0.37)$, whereas participants in resort hotels had a mean of $M = 0.129 (0.45)$. This difference was statistically significant, $t(68986) = -12.422$, $p < .0001$. These results indicate that resort hotels have more children per booking than city hotels. While there is still a statistically significant difference, the difference is small with only $0.04$ more children per booking for resort hotels. This implies that resort hotels are more likely to have bookings with children. Assuming that each booking only includes one child, then only $9.1\%$ of bookings have one child for city hotels and only $12.9\%$ of bookings for resort hotels have one child. This also tells us that the majority of hotel bookings do not include any children in the first place.
 
@@ -143,12 +161,15 @@ An independent-samples t test was conducted to compare number of children per bo
 Average Number of Children per Hotel Type
 :::
 
+::: {style="text-align: center; padding: 20px 0;"}
 ```{R}
 #| echo: false
 #| warning: false
 ggplot(hotels, aes(x = hotel, y = children)) + geom_boxplot() + labs(title = "Average ADR Based on Booking Predictors", x = "Hotel Type", y = "Children") + theme_bw()
 ```
+:::
 
+Reading the graph, we can easily see that the average number of children per bookings is close to $0$. Surprisingly, the outliers for this analysis are bookings with $2$, $3$, and $10$ children. As show in the graph, it is hard to tell that resort hotels have slightly children per booking than city hotels, but we can easily understand the graph. Since a bar plot graphs the means of children per booking for each city and resort hotel, and the means of both are close to $0$ and only have a difference of about $0.04$, both bars essentially will be the same on the graph, with the outliers for each of the hotels. Visually checking, this follows and our graph confirms our findings.
 
 ```{R}
 #| echo: false
@@ -164,49 +185,50 @@ ggplot(hotels, aes(x = hotel, y = children)) + geom_boxplot() + labs(title = "Av
 # Regression model by Resort Hotel
 # Regression model predicting the average daily rate overall
 
-# Define a list of models for modelsummary
+# Define a list of models for modelsummary (from modelsummary walkthrough)
 models <- list("Overall" = find_best_lm(data = hotels, DV = "adr", characteristics = characteristics),
                "City" = find_best_lm(data = city_hotel, DV = "adr",characteristics = characteristics), 
                "Resort" = find_best_lm(data = resort_hotel, DV = "adr", characteristics = characteristics))
 
-# Create table
+# Create table (from modelsummary walkthrough)
 regression_table <- modelsummary(models, stars = TRUE, gof_omit = "IC|Adj|F|RMSE|Log|Num.Obs") |> group_tt(j = list("Predictors" = 1, "Overall" = 2, "City Hotel" = 3, "Resort Hotel" = 4))
- 
-# Create coefficient plot and table
+
+# Create coefficient plot and table (from modelsummary walkthrough)
 ols <- models
-regression_plot <- modelplot(ols, coef_omit = "Intercept", coef_rename = c('adults' = 'Adults', 'children' = 'Children', "babies" = "Babies", 'lead_time' = 'Lead Time', 'stays_in_week_nights' = 'Week Nights', 'stays_in_weekend_nights' = 'Weekend Nights'), ) + labs(title = "Average ADR Based on Booking Predictors") + theme_bw()
+regression_coefficients <- modelplot(ols, coef_omit = "Intercept", coef_rename = c('adults' = 'Adults', 'children' = 'Children', "babies" = "Babies", 'lead_time' = 'Lead Time', 'stays_in_week_nights' = 'Week Nights', 'stays_in_weekend_nights' = 'Weekend Nights'), ) + labs(title = "Average ADR Based on Booking Predictors") + theme_bw()
 ```
 
-## Question Two
+#### Research Question Two
 
-- Which combinations of characteristics affect adr the most?
+-   Which combinations of characteristics affect adr the most?
 
-Three linear regression analyses were conducted to examine whether adults, children, babies, the lead time per booking, the amount of weekend nights booked, and the amount of week nights booked were associated with the average daily rate. The three models included the overall model based on both city and resort hotels, as well as two additional models that were run on the subsets data of city hotels and resort hotels. For each model, a function was created to find the model with the highest adjusted $R^2$ value. I chose this method of deciding which model to use since having more predictor terms always leads to a higher $R^2$ value, regardless of if a predictor adds any value to the model or not. Since adjusted $R^2$ adjust for the number of terms in a model, this will give us insight on if a predictor term is actually useful or not. Thus, the three regression models were statistically significant, for the overall model $F([5]$, $[119380])$ = $4635$, $p < .0001$, and explained $16.26\%$ of the variance in average daily rate ($R^2 = 0.1626$). Adults ($\beta = 19.81$, $p < .0001$), children ($\beta = 39.61$, $p < .0001$), babies ($\beta = 7.71$, $p < .0001$), lead time ($\beta = -0.04$, $p < .0001$), and the amount of week days booked ($\beta = 1.17$, $p < .0001$) are all significant predictors of average daily rate. Also, note that the babies predictor was not included in the city hotel model, and the amount of weekend nights were not included in the overall model, as including it lowered the adjusted $R^2$. This can be seen more easily in the Regression Output Table. These results indicate that children inflate the average daily rate the most. This makes sense, most children would require a second bed, whereas bookings with just adults would normally require a single bed. Also, surprisingly the average daily rate for resort hotels is $8.24 cheaper than city hotels. 
+Three multiple linear regression analyses were conducted to examine whether adults, children, babies, the lead time per booking, the amount of weekend nights booked, and the amount of week nights booked were associated with the average daily rate. The three models included the overall model based on both city and resort hotels, as well as two additional models that were run on the subsets data of city hotels and resort hotels. For each model, a function was created to find the model with the highest adjusted $R^2$ value. I chose this method of deciding which model to use since having more predictor terms always leads to a higher $R^2$ value, regardless of if a predictor adds any value to the model or not. Since adjusted $R^2$ adjust for the number of terms in a model, this will give us insight on if a predictor term is actually useful or not. Thus, the three regression models were statistically significant, for the overall model $F([5]$, $[119380])$ = $4635$, $p < .0001$, and explained $16.26\%$ of the variance in average daily rate ($R^2 = 0.1626$). Adults ($\beta = 19.81$, $p < .0001$), children ($\beta = 39.61$, $p < .0001$), babies ($\beta = 7.71$, $p < .0001$), lead time ($\beta = -0.04$, $p < .0001$), and the amount of week days booked ($\beta = 1.17$, $p < .0001$) are all significant predictors of average daily rate. Also, note that the babies predictor was not included in the city hotel model, and the amount of weekend nights were not included in the overall model, as including it lowered the adjusted $R^2$. This can be seen more easily in the Regression Output Table. These results indicate that children inflate the average daily rate the most. This makes sense, most children would require a second bed, whereas bookings with just adults would normally require a single bed. Also, surprisingly the average daily rate for resort hotels is \$8.24 cheaper than city hotels.
 
-
-This table shows the results of the three regression models for predicting the average daily rate using booking characteristics across overall, city hotel, and resort hotel, and the graph represents the coefficient estimates and the 95\% confidence intervals for each characteristic.
+This table shows the results of the three regression models for predicting the average daily rate using booking characteristics across overall, city hotel, and resort hotel, and the graph represents the coefficient estimates and the 95% confidence intervals for each characteristic.
 
 ::: {style="text-align: center; padding: 20px 0;"}
 Regression Output Table
 :::
 
+::: {style="text-align: center; padding: 20px 0;"}
 ```{R}
 #| echo: false
-
 regression_table
 ```
-
-::: {style="text-align: center; padding: 20px 0;"}
-Coefficient Estimates and 95\% Confidence Intervals
 :::
 
+Reading the regression output table, we can see that per the highest adjusted $R^2$, the babies predictor was not included in the city hotel model, and the amount of weekend nights were not included in the overall model. One conclusion that we can make is that babies have a stronger relationship with average daily rate in just resort hotels. Also, the amount of weekend nights booked for the overall model was not included, which was not expected. This variable did not contribute enough to improve the adjusted $R^2$ to be included in the analysis.
+
+::: {style="text-align: center; padding: 20px 0;"}
+Coefficient Estimates and 95% Confidence Intervals
+:::
+
+::: {style="text-align: center; padding: 20px 0;"}
 ```{R}
 #| echo: false
-
-regression_plot
+regression_coefficients
 ```
-
-
+:::
 
 ```{R}
 #| echo: false
@@ -224,54 +246,76 @@ repeated_guest <- hotels[hotels$is_repeated_guest == 1, ]
 # Test on days stayed between groups
 t_test_by_guest_question_three <- t.test(first_time$total_days_stayed, repeated_guest$total_days_stayed)
 sd_first_time <- sd(first_time$total_days_stayed)
-sd_repeated_guest <- (repeated_guest$total_days_stayed)
-
+sd_repeated_guest <- sd(repeated_guest$total_days_stayed)
 
 # On average a first time guest stays 1.48 to 1.62 days longer. statistically significant.
 ```
 
-## Question Three
+#### Research Question Three
 
-- Do repeated guest stay longer than first time guest?
+-   Do repeated guest stay longer than first time guest?
 
-An independent-samples t test was conducted to compare mean total nights stayed between first time guest and and returning guests. Participants in first time guest had a mean total nights stayed of $M = 3.48 (SD = 2.55)$, whereas returning guests had a mean of $M = 1.93 (SD = 2.14)$. This difference was statistically significant, $t(4174.2) = 43.69$, $p < .0001$. These results indicate that first time guest stay significantly longer on average than repeated guests. First time guests stay on average 1.55 days longer than repeated guests. 
+An independent-samples t test was conducted to compare mean total nights stayed between first time guest and and returning guests. Participants in first time guest had a mean total nights stayed of $M = 3.48 (SD = 2.55)$, whereas returning guests had a mean of $M = 1.93 (SD = 2.14)$. This difference was statistically significant, $t(4174.2) = 43.69$, $p < .0001$. These results indicate that first time guest stay significantly longer on average than repeated guests. First time guests stay on average 1.55 nights longer than repeated guests.
 
 ::: {style="text-align: center; padding: 20px 0;"}
 Average Days Stayed by Type of Guest
 :::
 
+::: {style="text-align: center; padding: 20px 0;"}
 ```{R}
 #| echo: false
 ggplot(hotels, aes(x = factor(is_repeated_guest), y = total_days_stayed)) + geom_boxplot() + labs(title = "Total Days Stayed by Guest Type", x = "Guest", y = "Total Days Stayed") + scale_x_discrete(labels = c("0" = "First Time Guest", "1" = "Repeated Guest")) + theme_bw()
 ```
+:::
+
+Similarly to the first graph, the mean total days stayed for each group are relatively small, but we can clearly see a difference here with first time guest being larger than repeated guests. Also, the outliers for first time guests consistently are higher outliers than repeated guests. The most days stayed for first time guest is 69 days, and the most days stayed for repeated guest is 45 days. 
 
 
 ```{R}
 #| echo: false
 # Question Four
-# Which month has the most meals served?
+# Is average daily rate lower for longer stays?
 
-# Clean "Undefined" to be "SC"
-
-hotels$meal[hotels$meal == "Undefined"] <- "SC"
-
-# Test on meal score by month
-table_food_by_month <- table(hotels$arrival_date_month, hotels$meal)
-chisq.test(table_food_by_month)
+lm_long_stays_adr <- lm(adr ~ total_days_stayed, data = hotels)
 ```
 
-## Question Four
+#### Research Question Four
 
-- Which month has the most meals served?
+-   Is average daily rate lower for longer stays?
+
+A linear regression analysis was conducted to examine whether average daily rate was associated with total days stayed. The overall regression model was statistically significant, $F([1, 119,388) = 553.7$, $p <0.0001$, and explained $0.46\%$ of the variance in average daily rate ($R^2 = 0.004617$). Total days stayed was a significant predictor of average daily rate $(\beta = 1.34, p < 0.0001)$, . These results indicate that each additional day stayed adds about $1.34 to the average daily rate. While very minimal, longer stays has a significant relationship to average daily rate.
+
 
 ::: {style="text-align: center; padding: 20px 0;"}
-Contingency Table for Months and Meal Types
+Best Fit Line for ADR Based on Total Days Stayed
 :::
 
+::: {style="text-align: center; padding: 20px 0;"}
 ```{R}
 #| echo: false
-contingency_table <- datasummary_crosstab(arrival_date_month ~ meal, data = hotels, levels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"), title = "Contingency Table")
+#| warning: false
+#| message: false
 
-contingency_table
+# Create regression plot
+regression_plot <- ggplot(hotels, aes(x = total_days_stayed, y = adr)) + geom_point() + geom_smooth(method = "lm") + labs(title = "ADR Based on Total Days Stayed") + theme_bw()
+regression_plot
 ```
+:::
 
+At first this plot looks odd, but note that since the x axis are in terms of days, each observation falls on a whole number, causing the stacking of observations and breaks in between them in the plot.
+
+::: {style="text-align: center; padding: 20px 0;"}
+Regression Output Table
+:::
+
+::: {style="text-align: center; padding: 20px 0;"}
+```{R}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Create table using modelsummary from above
+regression_table2 <- modelsummary(lm_long_stays_adr, stars = TRUE, gof_omit = "IC|Adj|F|RMSE|Log|Num.Obs")
+regression_table2
+```
+:::

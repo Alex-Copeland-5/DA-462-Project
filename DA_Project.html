@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 }
-
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-}
-pre.numberSource { margin-left: 3em; padding-left: 4px; }
-div.sourceCode
-{ }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -2383,7 +2348,7 @@ window.Quarto = {
 </section>
 <section id="dataset" class="level2">
 <h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
-<p>The dataset used for this project comes from the TidyTuesday GitHub repository and contains information about hotel bookings for city and resort hotels. Each observation in the dataset is a unique booking at either type of hotel with multiple variables describing the booking (.</p>
+<p>The dataset used for this project comes from the TidyTuesday GitHub repository and contains information about hotel bookings for city and resort hotels. Each observation in the dataset is a unique booking at either type of hotel with multiple variables describing the booking.</p>
 <p>Key variables used in this study</p>
 <ul>
 <li>adr - Average Daily Rate (price per day)</li>
@@ -2395,8 +2360,14 @@ window.Quarto = {
 </ul>
 <p>The dataset is separated into subsets for city hotels and resort hotels. This allows for comparison by type of hotel. Similarly, the dataset was separated into two subsets for first time guest and repeated guest for comparison by type of guest. Additionally, a new variable total_days_stayed was created to answer question three.</p>
 </section>
-<section id="question-one" class="level2">
-<h2 class="anchored" data-anchor-id="question-one">Question One</h2>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p>There was no cleaning necessary for the dataset, for my statistical analyses, there were only four observations that I decided to throw away and not use. For the data manipulation, I created subsets of the dataset that contained the observations of only bookings for city hotels and resort hotels for research question one. Also, I again subset the data into first time guest bookings and repeated guest bookings for the analysis of question three.</p>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<section id="research-question-one" class="level4">
+<h4 class="anchored" data-anchor-id="research-question-one">Research Question One</h4>
 <ul>
 <li>Do city hotels or resort hotels have more children per booking?</li>
 </ul>
@@ -2404,6 +2375,7 @@ window.Quarto = {
 <div style="text-align: center; padding: 20px 0;">
 <p>Average Number of Children per Hotel Type</p>
 </div>
+<div style="text-align: center; padding: 20px 0;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2413,17 +2385,20 @@ window.Quarto = {
 </div>
 </div>
 </div>
+</div>
+<p>Reading the graph, we can easily see that the average number of children per bookings is close to <span class="math inline">\(0\)</span>. Surprisingly, the outliers for this analysis are bookings with <span class="math inline">\(2\)</span>, <span class="math inline">\(3\)</span>, and <span class="math inline">\(10\)</span> children. As show in the graph, it is hard to tell that resort hotels have slightly children per booking than city hotels, but we can easily understand the graph. Since a bar plot graphs the means of children per booking for each city and resort hotel, and the means of both are close to <span class="math inline">\(0\)</span> and only have a difference of about <span class="math inline">\(0.04\)</span>, both bars essentially will be the same on the graph, with the outliers for each of the hotels. Visually checking, this follows and our graph confirms our findings.</p>
 </section>
-<section id="question-two" class="level2">
-<h2 class="anchored" data-anchor-id="question-two">Question Two</h2>
+<section id="research-question-two" class="level4">
+<h4 class="anchored" data-anchor-id="research-question-two">Research Question Two</h4>
 <ul>
 <li>Which combinations of characteristics affect adr the most?</li>
 </ul>
-<p>Three linear regression analyses were conducted to examine whether adults, children, babies, the lead time per booking, the amount of weekend nights booked, and the amount of week nights booked were associated with the average daily rate. The three models included the overall model based on both city and resort hotels, as well as two additional models that were run on the subsets data of city hotels and resort hotels. For each model, a function was created to find the model with the highest adjusted <span class="math inline">\(R^2\)</span> value. I chose this method of deciding which model to use since having more predictor terms always leads to a higher <span class="math inline">\(R^2\)</span> value, regardless of if a predictor adds any value to the model or not. Since adjusted <span class="math inline">\(R^2\)</span> adjust for the number of terms in a model, this will give us insight on if a predictor term is actually useful or not. Thus, the three regression models were statistically significant, for the overall model <span class="math inline">\(F([5]\)</span>, <span class="math inline">\([119380])\)</span> = <span class="math inline">\(4635\)</span>, <span class="math inline">\(p &lt; .0001\)</span>, and explained <span class="math inline">\(16.26\%\)</span> of the variance in average daily rate (<span class="math inline">\(R^2 = 0.1626\)</span>). Adults (<span class="math inline">\(\beta = 19.81\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), children (<span class="math inline">\(\beta = 39.61\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), babies (<span class="math inline">\(\beta = 7.71\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), lead time (<span class="math inline">\(\beta = -0.04\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), and the amount of week days booked (<span class="math inline">\(\beta = 1.17\)</span>, <span class="math inline">\(p &lt; .0001\)</span>) are all significant predictors of average daily rate. Also, note that the babies predictor was not included in the city hotel model, and the amount of weekend nights were not included in the overall model, as including it lowered the adjusted <span class="math inline">\(R^2\)</span>. This can be seen more easily in the Regression Output Table. These results indicate that children inflate the average daily rate the most. This makes sense, most children would require a second bed, whereas bookings with just adults would normally require a single bed. Also, surprisingly the average daily rate for resort hotels is $8.24 cheaper than city hotels.</p>
+<p>Three multiple linear regression analyses were conducted to examine whether adults, children, babies, the lead time per booking, the amount of weekend nights booked, and the amount of week nights booked were associated with the average daily rate. The three models included the overall model based on both city and resort hotels, as well as two additional models that were run on the subsets data of city hotels and resort hotels. For each model, a function was created to find the model with the highest adjusted <span class="math inline">\(R^2\)</span> value. I chose this method of deciding which model to use since having more predictor terms always leads to a higher <span class="math inline">\(R^2\)</span> value, regardless of if a predictor adds any value to the model or not. Since adjusted <span class="math inline">\(R^2\)</span> adjust for the number of terms in a model, this will give us insight on if a predictor term is actually useful or not. Thus, the three regression models were statistically significant, for the overall model <span class="math inline">\(F([5]\)</span>, <span class="math inline">\([119380])\)</span> = <span class="math inline">\(4635\)</span>, <span class="math inline">\(p &lt; .0001\)</span>, and explained <span class="math inline">\(16.26\%\)</span> of the variance in average daily rate (<span class="math inline">\(R^2 = 0.1626\)</span>). Adults (<span class="math inline">\(\beta = 19.81\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), children (<span class="math inline">\(\beta = 39.61\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), babies (<span class="math inline">\(\beta = 7.71\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), lead time (<span class="math inline">\(\beta = -0.04\)</span>, <span class="math inline">\(p &lt; .0001\)</span>), and the amount of week days booked (<span class="math inline">\(\beta = 1.17\)</span>, <span class="math inline">\(p &lt; .0001\)</span>) are all significant predictors of average daily rate. Also, note that the babies predictor was not included in the city hotel model, and the amount of weekend nights were not included in the overall model, as including it lowered the adjusted <span class="math inline">\(R^2\)</span>. This can be seen more easily in the Regression Output Table. These results indicate that children inflate the average daily rate the most. This makes sense, most children would require a second bed, whereas bookings with just adults would normally require a single bed. Also, surprisingly the average daily rate for resort hotels is $8.24 cheaper than city hotels.</p>
 <p>This table shows the results of the three regression models for predicting the average daily rate using booking characteristics across overall, city hotel, and resort hotel, and the graph represents the coefficient estimates and the 95% confidence intervals for each characteristic.</p>
 <div style="text-align: center; padding: 20px 0;">
 <p>Regression Output Table</p>
 </div>
+<div style="text-align: center; padding: 20px 0;">
 <div class="cell">
 <div class="cell-output-display">
 <!-- preamble start -->
@@ -2666,26 +2641,26 @@ function tinytable_rank_sorter(a, b, aRow, bRow, column, dir, sorterParams) {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_3fg8x2zm7bkzhla9nps5 = TinyTable.createTableFunctions("tinytable_3fg8x2zm7bkzhla9nps5");
+      const tableFns_mgadkdzfybld0bh24zvi = TinyTable.createTableFunctions("tinytable_mgadkdzfybld0bh24zvi");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '-1', j: 4 } ], css_id: 'tinytable_css_pbefcpexb505vzp93mjz',}, 
-          { positions: [ { i: '15', j: 2 }, { i: '15', j: 3 }, { i: '15', j: 4 } ], css_id: 'tinytable_css_ag12y9vq7yqfg3vnglpg',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 } ], css_id: 'tinytable_css_az357msrlzg1baee9atv',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '14', j: 2 }, { i: '0', j: 3 }, { i: '14', j: 3 }, { i: '0', j: 4 }, { i: '14', j: 4 } ], css_id: 'tinytable_css_4hwksvvwuxfs4wn153ud',}, 
-          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 3 } ], css_id: 'tinytable_css_nm8ovgjnenrytrycop8y',}, 
-          { positions: [ { i: '15', j: 1 } ], css_id: 'tinytable_css_osi1q94beehik0kpbys0',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 } ], css_id: 'tinytable_css_am2xrva2fdos2p7fpa3m',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '14', j: 1 } ], css_id: 'tinytable_css_q5xovkrt2h3s1ydjvdic',}, 
-          { positions: [ { i: '-1', j: 1 } ], css_id: 'tinytable_css_r8ww0g3ytonccvt7g8zw',}, 
+          { positions: [ { i: '-1', j: 4 } ], css_id: 'tinytable_css_e303c2szn3htfbu4rs5k',}, 
+          { positions: [ { i: '15', j: 2 }, { i: '15', j: 3 }, { i: '15', j: 4 } ], css_id: 'tinytable_css_3uj73inggc9eog0i7jf0',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 } ], css_id: 'tinytable_css_ri8uovk1c0gaf58qscuo',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '14', j: 2 }, { i: '0', j: 3 }, { i: '14', j: 3 }, { i: '0', j: 4 }, { i: '14', j: 4 } ], css_id: 'tinytable_css_qptjfiajqg8e19gopg12',}, 
+          { positions: [ { i: '-1', j: 2 }, { i: '-1', j: 3 } ], css_id: 'tinytable_css_oyfng0x4pfw2igmd9olh',}, 
+          { positions: [ { i: '15', j: 1 } ], css_id: 'tinytable_css_cxrdkxmtbuv48wqqwjpn',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 } ], css_id: 'tinytable_css_3xueycggpbea8khodixt',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '14', j: 1 } ], css_id: 'tinytable_css_jqv85rpuz7dxgqur067r',}, 
+          { positions: [ { i: '-1', j: 1 } ], css_id: 'tinytable_css_7epgvxjwns9glgtxkz6u',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_3fg8x2zm7bkzhla9nps5.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_mgadkdzfybld0bh24zvi.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2888,18 +2863,18 @@ line-height: var(--tt-line-height-footnote-tight);
 </style>
     <style>
 
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_pbefcpexb505vzp93mjz, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_pbefcpexb505vzp93mjz { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_ag12y9vq7yqfg3vnglpg, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_ag12y9vq7yqfg3vnglpg { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_az357msrlzg1baee9atv, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_az357msrlzg1baee9atv { text-align: center }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_4hwksvvwuxfs4wn153ud, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_4hwksvvwuxfs4wn153ud { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_nm8ovgjnenrytrycop8y, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_nm8ovgjnenrytrycop8y { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_osi1q94beehik0kpbys0, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_osi1q94beehik0kpbys0 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_am2xrva2fdos2p7fpa3m, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_am2xrva2fdos2p7fpa3m { text-align: left }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_q5xovkrt2h3s1ydjvdic, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_q5xovkrt2h3s1ydjvdic { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-#tinytable_3fg8x2zm7bkzhla9nps5 td.tinytable_css_r8ww0g3ytonccvt7g8zw, #tinytable_3fg8x2zm7bkzhla9nps5 th.tinytable_css_r8ww0g3ytonccvt7g8zw { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_e303c2szn3htfbu4rs5k, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_e303c2szn3htfbu4rs5k { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_3uj73inggc9eog0i7jf0, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_3uj73inggc9eog0i7jf0 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_ri8uovk1c0gaf58qscuo, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_ri8uovk1c0gaf58qscuo { text-align: center }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_qptjfiajqg8e19gopg12, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_qptjfiajqg8e19gopg12 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_oyfng0x4pfw2igmd9olh, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_oyfng0x4pfw2igmd9olh { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 3%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_cxrdkxmtbuv48wqqwjpn, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_cxrdkxmtbuv48wqqwjpn { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_3xueycggpbea8khodixt, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_3xueycggpbea8khodixt { text-align: left }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_jqv85rpuz7dxgqur067r, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_jqv85rpuz7dxgqur067r { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+#tinytable_mgadkdzfybld0bh24zvi td.tinytable_css_7epgvxjwns9glgtxkz6u, #tinytable_mgadkdzfybld0bh24zvi th.tinytable_css_7epgvxjwns9glgtxkz6u { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: black; --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.03em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 3%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
 </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_3fg8x2zm7bkzhla9nps5" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_mgadkdzfybld0bh24zvi" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
 <tr>
@@ -3013,9 +2988,12 @@ line-height: var(--tt-line-height-footnote-tight);
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
+</div>
+<p>Reading the regression output table, we can see that per the highest adjusted <span class="math inline">\(R^2\)</span>, the babies predictor was not included in the city hotel model, and the amount of weekend nights were not included in the overall model. One conclusion that we can make is that babies have a stronger relationship with average daily rate in just resort hotels. Also, the amount of weekend nights booked for the overall model was not included, which was not expected. This variable did not contribute enough to improve the adjusted <span class="math inline">\(R^2\)</span> to be included in the analysis.</p>
 <div style="text-align: center; padding: 20px 0;">
 <p>Coefficient Estimates and 95% Confidence Intervals</p>
 </div>
+<div style="text-align: center; padding: 20px 0;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -3025,16 +3003,18 @@ line-height: var(--tt-line-height-footnote-tight);
 </div>
 </div>
 </div>
+</div>
 </section>
-<section id="question-three" class="level2">
-<h2 class="anchored" data-anchor-id="question-three">Question Three</h2>
+<section id="research-question-three" class="level4">
+<h4 class="anchored" data-anchor-id="research-question-three">Research Question Three</h4>
 <ul>
 <li>Do repeated guest stay longer than first time guest?</li>
 </ul>
-<p>An independent-samples t test was conducted to compare mean total nights stayed between first time guest and and returning guests. Participants in first time guest had a mean total nights stayed of <span class="math inline">\(M = 3.48 (SD = 2.55)\)</span>, whereas returning guests had a mean of <span class="math inline">\(M = 1.93 (SD = 2.14)\)</span>. This difference was statistically significant, <span class="math inline">\(t(4174.2) = 43.69\)</span>, <span class="math inline">\(p &lt; .0001\)</span>. These results indicate that first time guest stay significantly longer on average than repeated guests. First time guests stay on average 1.55 days longer than repeated guests.</p>
+<p>An independent-samples t test was conducted to compare mean total nights stayed between first time guest and and returning guests. Participants in first time guest had a mean total nights stayed of <span class="math inline">\(M = 3.48 (SD = 2.55)\)</span>, whereas returning guests had a mean of <span class="math inline">\(M = 1.93 (SD = 2.14)\)</span>. This difference was statistically significant, <span class="math inline">\(t(4174.2) = 43.69\)</span>, <span class="math inline">\(p &lt; .0001\)</span>. These results indicate that first time guest stay significantly longer on average than repeated guests. First time guests stay on average 1.55 nights longer than repeated guests.</p>
 <div style="text-align: center; padding: 20px 0;">
 <p>Average Days Stayed by Type of Guest</p>
 </div>
+<div style="text-align: center; padding: 20px 0;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -3044,28 +3024,35 @@ line-height: var(--tt-line-height-footnote-tight);
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson&#39;s Chi-squared test
-
-data:  table_food_by_month
-X-squared = 2553.2, df = 33, p-value &lt; 2.2e-16</code></pre>
 </div>
-</div>
+<p>Similarly to the first graph, the mean total days stayed for each group are relatively small, but we can clearly see a difference here with first time guest being larger than repeated guests. Also, the outliers for first time guests consistently are higher outliers than repeated guests. The most days stayed for first time guest is 69 days, and the most days stayed for repeated guest is 45 days.</p>
 </section>
-<section id="question-four" class="level2">
-<h2 class="anchored" data-anchor-id="question-four">Question Four</h2>
+<section id="research-question-four" class="level4">
+<h4 class="anchored" data-anchor-id="research-question-four">Research Question Four</h4>
 <ul>
-<li>Which month has the most meals served?</li>
+<li>Is average daily rate lower for longer stays?</li>
 </ul>
+<p>A linear regression analysis was conducted to examine whether average daily rate was associated with total days stayed. The overall regression model was statistically significant, <span class="math inline">\(F([1, 119,388) = 553.7\)</span>, <span class="math inline">\(p &lt;0.0001\)</span>, and explained <span class="math inline">\(0.46\%\)</span> of the variance in average daily rate (<span class="math inline">\(R^2 = 0.004617\)</span>). Total days stayed was a significant predictor of average daily rate <span class="math inline">\((\beta = 1.34, p &lt; 0.0001)\)</span>, . These results indicate that each additional day stayed adds about $1.34 to the average daily rate. While very minimal, longer stays has a significant relationship to average daily rate.</p>
 <div style="text-align: center; padding: 20px 0;">
-<p>Contingency Table for Months and Meal Types</p>
+<p>Best Fit Line for ADR Based on Total Days Stayed</p>
 </div>
+<div style="text-align: center; padding: 20px 0;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="ot">&lt;-</span> <span class="fu">datasummary_crosstab</span>(arrival_date_month <span class="sc">~</span> meal, <span class="at">data =</span> hotels, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;January&quot;</span>, <span class="st">&quot;February&quot;</span>, <span class="st">&quot;March&quot;</span>, <span class="st">&quot;April&quot;</span>, <span class="st">&quot;May&quot;</span>, <span class="st">&quot;June&quot;</span>, <span class="st">&quot;July&quot;</span>, <span class="st">&quot;August&quot;</span>, <span class="st">&quot;September&quot;</span>, <span class="st">&quot;October&quot;</span>, <span class="st">&quot;November&quot;</span>, <span class="st">&quot;December&quot;</span>), <span class="at">title =</span> <span class="st">&quot;Meal Type by Month&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>contingency_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,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" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>At first this plot looks odd, but note that since the x axis are in terms of days, each observation falls on a whole number, causing the stacking of observations and breaks in between them in the plot.</p>
+<div style="text-align: center; padding: 20px 0;">
+<p>Regression Output Table</p>
+</div>
+<div style="text-align: center; padding: 20px 0;">
+<div class="cell">
 <div class="cell-output-display">
 <!-- preamble start -->
 
@@ -3307,23 +3294,25 @@ function tinytable_rank_sorter(a, b, aRow, bRow, column, dir, sorterParams) {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_xcor5idirlq3ems77kfd = TinyTable.createTableFunctions("tinytable_xcor5idirlq3ems77kfd");
+      const tableFns_8vfjrzg12vk06wsz1pqx = TinyTable.createTableFunctions("tinytable_8vfjrzg12vk06wsz1pqx");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '26', j: 3 }, { i: '26', j: 4 }, { i: '26', j: 5 }, { i: '26', j: 6 }, { i: '26', j: 7 } ], css_id: 'tinytable_css_u6eming09njqxkcfrb11',}, 
-          { positions: [ { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '19', j: 4 }, { i: '20', j: 4 }, { i: '21', j: 4 }, { i: '22', j: 4 }, { i: '23', j: 4 }, { i: '24', j: 4 }, { i: '25', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '17', j: 5 }, { i: '18', j: 5 }, { i: '19', j: 5 }, { i: '20', j: 5 }, { i: '21', j: 5 }, { i: '22', j: 5 }, { i: '23', j: 5 }, { i: '24', j: 5 }, { i: '25', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '13', j: 6 }, { i: '14', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '17', j: 6 }, { i: '18', j: 6 }, { i: '19', j: 6 }, { i: '20', j: 6 }, { i: '21', j: 6 }, { i: '22', j: 6 }, { i: '23', j: 6 }, { i: '24', j: 6 }, { i: '25', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '13', j: 7 }, { i: '14', j: 7 }, { i: '15', j: 7 }, { i: '16', j: 7 }, { i: '17', j: 7 }, { i: '18', j: 7 }, { i: '19', j: 7 }, { i: '20', j: 7 }, { i: '21', j: 7 }, { i: '22', j: 7 }, { i: '23', j: 7 }, { i: '24', j: 7 }, { i: '25', j: 7 } ], css_id: 'tinytable_css_3s6ouj15gsub1jv8jxvp',}, 
-          { positions: [ { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_ogstcvhhise0oxtxtalw',}, 
-          { positions: [ { i: '26', j: 1 }, { i: '26', j: 2 } ], css_id: 'tinytable_css_oeuozyf2sxh0juriaw66',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 } ], css_id: 'tinytable_css_7nasvewnfijkpvlndoxy',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 } ], css_id: 'tinytable_css_rfro856lff6fn4y33yql',}, 
+          { positions: [ { i: '5', j: 2 } ], css_id: 'tinytable_css_ycuel2ungkz2kvhr8paz',}, 
+          { positions: [ { i: '4', j: 2 } ], css_id: 'tinytable_css_eq2na6uw755jxtu4c6cv',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 } ], css_id: 'tinytable_css_sfju0gn41y8tlajjugqh',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_hg72j02n5jg8j7encl5p',}, 
+          { positions: [ { i: '5', j: 1 } ], css_id: 'tinytable_css_ihcxmiqcns1xlfk9wn09',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_e88sppx96xe6a6o98dre',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 } ], css_id: 'tinytable_css_kbw328qs30in83ajawce',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_8lqxh6xhsp1a4afjjr0l',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_xcor5idirlq3ems77kfd.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_8vfjrzg12vk06wsz1pqx.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -3526,262 +3515,45 @@ line-height: var(--tt-line-height-footnote-tight);
 </style>
     <style>
 
-#tinytable_xcor5idirlq3ems77kfd td.tinytable_css_u6eming09njqxkcfrb11, #tinytable_xcor5idirlq3ems77kfd th.tinytable_css_u6eming09njqxkcfrb11 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-#tinytable_xcor5idirlq3ems77kfd td.tinytable_css_3s6ouj15gsub1jv8jxvp, #tinytable_xcor5idirlq3ems77kfd th.tinytable_css_3s6ouj15gsub1jv8jxvp { text-align: right }
-#tinytable_xcor5idirlq3ems77kfd td.tinytable_css_ogstcvhhise0oxtxtalw, #tinytable_xcor5idirlq3ems77kfd th.tinytable_css_ogstcvhhise0oxtxtalw { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-#tinytable_xcor5idirlq3ems77kfd td.tinytable_css_oeuozyf2sxh0juriaw66, #tinytable_xcor5idirlq3ems77kfd th.tinytable_css_oeuozyf2sxh0juriaw66 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-#tinytable_xcor5idirlq3ems77kfd td.tinytable_css_7nasvewnfijkpvlndoxy, #tinytable_xcor5idirlq3ems77kfd th.tinytable_css_7nasvewnfijkpvlndoxy { text-align: left }
-#tinytable_xcor5idirlq3ems77kfd td.tinytable_css_rfro856lff6fn4y33yql, #tinytable_xcor5idirlq3ems77kfd th.tinytable_css_rfro856lff6fn4y33yql { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_ycuel2ungkz2kvhr8paz, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_ycuel2ungkz2kvhr8paz { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_eq2na6uw755jxtu4c6cv, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_eq2na6uw755jxtu4c6cv { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_sfju0gn41y8tlajjugqh, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_sfju0gn41y8tlajjugqh { text-align: center }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_hg72j02n5jg8j7encl5p, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_hg72j02n5jg8j7encl5p { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_ihcxmiqcns1xlfk9wn09, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_ihcxmiqcns1xlfk9wn09 { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_e88sppx96xe6a6o98dre, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_e88sppx96xe6a6o98dre { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_kbw328qs30in83ajawce, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_kbw328qs30in83ajawce { text-align: left }
+#tinytable_8vfjrzg12vk06wsz1pqx td.tinytable_css_8lqxh6xhsp1a4afjjr0l, #tinytable_8vfjrzg12vk06wsz1pqx th.tinytable_css_8lqxh6xhsp1a4afjjr0l { position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
 </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_xcor5idirlq3ems77kfd" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <caption>Meal Type by Month</caption>
+      <table class="tinytable" id="tinytable_8vfjrzg12vk06wsz1pqx" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
         <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="1">arrival_date_month</th>
-                <th scope="col" data-row="0" data-col="2"> </th>
-                <th scope="col" data-row="0" data-col="3">BB</th>
-                <th scope="col" data-row="0" data-col="4">FB</th>
-                <th scope="col" data-row="0" data-col="5">HB</th>
-                <th scope="col" data-row="0" data-col="6">SC</th>
-                <th scope="col" data-row="0" data-col="7">All</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
               </tr>
         </thead>
-        
+        <tfoot><tr><td colspan="2">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="1">April</td>
-                  <td data-row="1" data-col="2">N</td>
-                  <td data-row="1" data-col="3">8267</td>
-                  <td data-row="1" data-col="4">59</td>
-                  <td data-row="1" data-col="5">1465</td>
-                  <td data-row="1" data-col="6">1298</td>
-                  <td data-row="1" data-col="7">11089</td>
+                  <td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">97.229***</td>
                 </tr>
                 <tr>
                   <td data-row="2" data-col="1"></td>
-                  <td data-row="2" data-col="2">% row</td>
-                  <td data-row="2" data-col="3">74.6</td>
-                  <td data-row="2" data-col="4">0.5</td>
-                  <td data-row="2" data-col="5">13.2</td>
-                  <td data-row="2" data-col="6">11.7</td>
-                  <td data-row="2" data-col="7">100.0</td>
+                  <td data-row="2" data-col="2">(0.244)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="1">August</td>
-                  <td data-row="3" data-col="2">N</td>
-                  <td data-row="3" data-col="3">9936</td>
-                  <td data-row="3" data-col="4">94</td>
-                  <td data-row="3" data-col="5">2556</td>
-                  <td data-row="3" data-col="6">1291</td>
-                  <td data-row="3" data-col="7">13877</td>
+                  <td data-row="3" data-col="1">total_days_stayed</td>
+                  <td data-row="3" data-col="2">1.343***</td>
                 </tr>
                 <tr>
                   <td data-row="4" data-col="1"></td>
-                  <td data-row="4" data-col="2">% row</td>
-                  <td data-row="4" data-col="3">71.6</td>
-                  <td data-row="4" data-col="4">0.7</td>
-                  <td data-row="4" data-col="5">18.4</td>
-                  <td data-row="4" data-col="6">9.3</td>
-                  <td data-row="4" data-col="7">100.0</td>
+                  <td data-row="4" data-col="2">(0.057)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="1">December</td>
-                  <td data-row="5" data-col="2">N</td>
-                  <td data-row="5" data-col="3">5130</td>
-                  <td data-row="5" data-col="4">123</td>
-                  <td data-row="5" data-col="5">671</td>
-                  <td data-row="5" data-col="6">856</td>
-                  <td data-row="5" data-col="7">6780</td>
-                </tr>
-                <tr>
-                  <td data-row="6" data-col="1"></td>
-                  <td data-row="6" data-col="2">% row</td>
-                  <td data-row="6" data-col="3">75.7</td>
-                  <td data-row="6" data-col="4">1.8</td>
-                  <td data-row="6" data-col="5">9.9</td>
-                  <td data-row="6" data-col="6">12.6</td>
-                  <td data-row="6" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="7" data-col="1">February</td>
-                  <td data-row="7" data-col="2">N</td>
-                  <td data-row="7" data-col="3">6310</td>
-                  <td data-row="7" data-col="4">106</td>
-                  <td data-row="7" data-col="5">611</td>
-                  <td data-row="7" data-col="6">1041</td>
-                  <td data-row="7" data-col="7">8068</td>
-                </tr>
-                <tr>
-                  <td data-row="8" data-col="1"></td>
-                  <td data-row="8" data-col="2">% row</td>
-                  <td data-row="8" data-col="3">78.2</td>
-                  <td data-row="8" data-col="4">1.3</td>
-                  <td data-row="8" data-col="5">7.6</td>
-                  <td data-row="8" data-col="6">12.9</td>
-                  <td data-row="8" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="9" data-col="1">January</td>
-                  <td data-row="9" data-col="2">N</td>
-                  <td data-row="9" data-col="3">4812</td>
-                  <td data-row="9" data-col="4">7</td>
-                  <td data-row="9" data-col="5">424</td>
-                  <td data-row="9" data-col="6">686</td>
-                  <td data-row="9" data-col="7">5929</td>
-                </tr>
-                <tr>
-                  <td data-row="10" data-col="1"></td>
-                  <td data-row="10" data-col="2">% row</td>
-                  <td data-row="10" data-col="3">81.2</td>
-                  <td data-row="10" data-col="4">0.1</td>
-                  <td data-row="10" data-col="5">7.2</td>
-                  <td data-row="10" data-col="6">11.6</td>
-                  <td data-row="10" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="11" data-col="1">July</td>
-                  <td data-row="11" data-col="2">N</td>
-                  <td data-row="11" data-col="3">9265</td>
-                  <td data-row="11" data-col="4">117</td>
-                  <td data-row="11" data-col="5">2019</td>
-                  <td data-row="11" data-col="6">1260</td>
-                  <td data-row="11" data-col="7">12661</td>
-                </tr>
-                <tr>
-                  <td data-row="12" data-col="1"></td>
-                  <td data-row="12" data-col="2">% row</td>
-                  <td data-row="12" data-col="3">73.2</td>
-                  <td data-row="12" data-col="4">0.9</td>
-                  <td data-row="12" data-col="5">15.9</td>
-                  <td data-row="12" data-col="6">10.0</td>
-                  <td data-row="12" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="13" data-col="1">June</td>
-                  <td data-row="13" data-col="2">N</td>
-                  <td data-row="13" data-col="3">8547</td>
-                  <td data-row="13" data-col="4">28</td>
-                  <td data-row="13" data-col="5">1190</td>
-                  <td data-row="13" data-col="6">1174</td>
-                  <td data-row="13" data-col="7">10939</td>
-                </tr>
-                <tr>
-                  <td data-row="14" data-col="1"></td>
-                  <td data-row="14" data-col="2">% row</td>
-                  <td data-row="14" data-col="3">78.1</td>
-                  <td data-row="14" data-col="4">0.3</td>
-                  <td data-row="14" data-col="5">10.9</td>
-                  <td data-row="14" data-col="6">10.7</td>
-                  <td data-row="14" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="15" data-col="1">March</td>
-                  <td data-row="15" data-col="2">N</td>
-                  <td data-row="15" data-col="3">7746</td>
-                  <td data-row="15" data-col="4">57</td>
-                  <td data-row="15" data-col="5">826</td>
-                  <td data-row="15" data-col="6">1165</td>
-                  <td data-row="15" data-col="7">9794</td>
-                </tr>
-                <tr>
-                  <td data-row="16" data-col="1"></td>
-                  <td data-row="16" data-col="2">% row</td>
-                  <td data-row="16" data-col="3">79.1</td>
-                  <td data-row="16" data-col="4">0.6</td>
-                  <td data-row="16" data-col="5">8.4</td>
-                  <td data-row="16" data-col="6">11.9</td>
-                  <td data-row="16" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="17" data-col="1">May</td>
-                  <td data-row="17" data-col="2">N</td>
-                  <td data-row="17" data-col="3">9388</td>
-                  <td data-row="17" data-col="4">12</td>
-                  <td data-row="17" data-col="5">1185</td>
-                  <td data-row="17" data-col="6">1206</td>
-                  <td data-row="17" data-col="7">11791</td>
-                </tr>
-                <tr>
-                  <td data-row="18" data-col="1"></td>
-                  <td data-row="18" data-col="2">% row</td>
-                  <td data-row="18" data-col="3">79.6</td>
-                  <td data-row="18" data-col="4">0.1</td>
-                  <td data-row="18" data-col="5">10.1</td>
-                  <td data-row="18" data-col="6">10.2</td>
-                  <td data-row="18" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="19" data-col="1">November</td>
-                  <td data-row="19" data-col="2">N</td>
-                  <td data-row="19" data-col="3">5693</td>
-                  <td data-row="19" data-col="4">78</td>
-                  <td data-row="19" data-col="5">417</td>
-                  <td data-row="19" data-col="6">606</td>
-                  <td data-row="19" data-col="7">6794</td>
-                </tr>
-                <tr>
-                  <td data-row="20" data-col="1"></td>
-                  <td data-row="20" data-col="2">% row</td>
-                  <td data-row="20" data-col="3">83.8</td>
-                  <td data-row="20" data-col="4">1.1</td>
-                  <td data-row="20" data-col="5">6.1</td>
-                  <td data-row="20" data-col="6">8.9</td>
-                  <td data-row="20" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="21" data-col="1">October</td>
-                  <td data-row="21" data-col="2">N</td>
-                  <td data-row="21" data-col="3">9039</td>
-                  <td data-row="21" data-col="4">72</td>
-                  <td data-row="21" data-col="5">1418</td>
-                  <td data-row="21" data-col="6">631</td>
-                  <td data-row="21" data-col="7">11160</td>
-                </tr>
-                <tr>
-                  <td data-row="22" data-col="1"></td>
-                  <td data-row="22" data-col="2">% row</td>
-                  <td data-row="22" data-col="3">81.0</td>
-                  <td data-row="22" data-col="4">0.6</td>
-                  <td data-row="22" data-col="5">12.7</td>
-                  <td data-row="22" data-col="6">5.7</td>
-                  <td data-row="22" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="23" data-col="1">September</td>
-                  <td data-row="23" data-col="2">N</td>
-                  <td data-row="23" data-col="3">8177</td>
-                  <td data-row="23" data-col="4">45</td>
-                  <td data-row="23" data-col="5">1681</td>
-                  <td data-row="23" data-col="6">605</td>
-                  <td data-row="23" data-col="7">10508</td>
-                </tr>
-                <tr>
-                  <td data-row="24" data-col="1"></td>
-                  <td data-row="24" data-col="2">% row</td>
-                  <td data-row="24" data-col="3">77.8</td>
-                  <td data-row="24" data-col="4">0.4</td>
-                  <td data-row="24" data-col="5">16.0</td>
-                  <td data-row="24" data-col="6">5.8</td>
-                  <td data-row="24" data-col="7">100.0</td>
-                </tr>
-                <tr>
-                  <td data-row="25" data-col="1">All</td>
-                  <td data-row="25" data-col="2">N</td>
-                  <td data-row="25" data-col="3">92310</td>
-                  <td data-row="25" data-col="4">798</td>
-                  <td data-row="25" data-col="5">14463</td>
-                  <td data-row="25" data-col="6">11819</td>
-                  <td data-row="25" data-col="7">119390</td>
-                </tr>
-                <tr>
-                  <td data-row="26" data-col="1"></td>
-                  <td data-row="26" data-col="2">% row</td>
-                  <td data-row="26" data-col="3">77.3</td>
-                  <td data-row="26" data-col="4">0.7</td>
-                  <td data-row="26" data-col="5">12.1</td>
-                  <td data-row="26" data-col="6">9.9</td>
-                  <td data-row="26" data-col="7">100.0</td>
+                  <td data-row="5" data-col="1">R2</td>
+                  <td data-row="5" data-col="2">0.005</td>
                 </tr>
         </tbody>
       </table>
@@ -3789,6 +3561,11 @@ line-height: var(--tt-line-height-footnote-tight);
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 </section>
 
 </main>
